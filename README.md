@@ -71,3 +71,7 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 |	11	|	Feedback on project	|	✔️	|	feedback	|
 |	12	|	Semester/team name	|		|		|
 |	13	|	Feedback on design doc	|	✔️	|	feedback	|
+
+## System Design
+
+![system_design](/res/oss_feedback_system_design.png)
