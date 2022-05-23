@@ -73,5 +73,34 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 |	13	|	Feedback on design doc	|	✔️	|	feedback	|
 
 ## System Design
-
 ![system_design](/res/oss_feedback_system_design.png)
+
+## Config File Structure
+An example of a sheet parsing task in the `config.yaml` is shown below:
+```yaml
+---
+tasks:
+  ...
+  - oss_and_wiki_tasks:
+    name: Parse OSS & wiki grades Sheet
+    subtasks:
+      - name: Parse OSS & wiki grades - Spring 22
+        url: https://docs.google.com/spreadsheets/d/1qY6wGMAqsA3gnAy2fll6nKq80ghtbUhgT24R2uNSGec/edit#gid=0
+        sheet: 0
+        feedback_column_names: ['OSS Comments', 'Wiki comments']
+        feedback_column_indexes: ['E', 'G']
+        resource_column_names: []
+        resource_column_indexes: []
+        id_column_names: []
+        id_column_indexes: ['B']
+  ...
+```
+Use of a `config.yaml` file makes the design scalable, as new tasks can be added with ease, without much code changes. 
+
+To add a new parsing task for an already existing sheet type (OSS and Wiki/Comprehensive History/Project Demo Eval): 
+* Add a new subtask for the `subtasks` dict under the appropriate `task`
+
+To add a new parsing task for a new sheet type: 
+* Create a new task under `tasks`
+* Give it a name using the `name` key
+* Add the required `subtask`s
