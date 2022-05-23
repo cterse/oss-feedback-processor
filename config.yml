@@ -1,6 +1,6 @@
 ---
 tasks:
-  - oss_and_wiki_tasks:
+  oss_and_wiki_tasks:
     name: Parse OSS & wiki grades Sheet
     description: Parse OSS & wiki grades Sheet
     subtasks:
@@ -28,7 +28,7 @@ tasks:
         id_column_indexes: ['B']
         enabled: true
   
-  - project_demo_eval_tasks:
+  project_demo_eval_tasks:
     name: Parse Project demo evaluation rubric Sheet
     subtasks:
       - name: Parse Project demo evaluation rubric - Spring 22
@@ -55,7 +55,7 @@ tasks:
         id_column_indexes: []
         enabled: true
   
-  - project_history_tasks:
+  project_history_tasks:
     name: Parse Comprehensive Expertiza OSS and Final Project History Sheet
     subtasks:
       - name: Parse Comprehensive Expertiza OSS and Final project history
