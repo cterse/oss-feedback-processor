@@ -72,10 +72,10 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 |	12	|	Semester/team name	|		|		|
 |	13	|	Feedback on design doc	|	✔️	|	feedback	|
 
-## System Design
+## System Design 🔌
 ![system_design](/res/oss_feedback_system_design.png)
 
-## Config File Structure
+## Config File Structure 📜
 An example of a sheet parsing task in the `config.yaml` is shown below:
 ```yaml
 ---
