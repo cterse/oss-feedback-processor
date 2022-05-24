@@ -81,10 +81,12 @@ An example of a sheet parsing task in the `config.yaml` is shown below:
 ---
 tasks:
   ...
-  - oss_and_wiki_tasks:
+  oss_and_wiki_tasks:
     name: Parse OSS & wiki grades Sheet
+    description: Parse OSS & wiki grades Sheet
     subtasks:
       - name: Parse OSS & wiki grades - Spring 22
+        path: <absolute-project-path>/oss-feedback-processor/data/spring-22/oss_and_wiki_grades_spring_2022.xlsx
         url: https://docs.google.com/spreadsheets/d/1qY6wGMAqsA3gnAy2fll6nKq80ghtbUhgT24R2uNSGec/edit#gid=0
         sheet: 0
         feedback_column_names: ['OSS Comments', 'Wiki comments']
@@ -93,6 +95,7 @@ tasks:
         resource_column_indexes: []
         id_column_names: []
         id_column_indexes: ['B']
+        enabled: true
   ...
 ```
 Use of a `config.yaml` file makes the design scalable, as new tasks can be added with ease, without much code changes. 
