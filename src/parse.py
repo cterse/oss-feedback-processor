@@ -21,8 +21,8 @@ def process_tasks(config_dict):
     Processes the tasks in the config file and returns a list of task dictionaries.
     """
     subtasks = get_all_subtasks(config_dict)
-    print(subtasks[0])
-    print(f'Found {len(subtasks)} subtasks.')
+    # print(subtasks)
+    print(f'Found {len(subtasks)} subtasks.\n\n')
 
     for subtask in subtasks:
         process_subtask(subtask)
