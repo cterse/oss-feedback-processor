@@ -26,6 +26,8 @@ def process_tasks(config_dict):
 
     for subtask in subtasks:
         process_subtask(subtask)
+        print(f'Processed subtask: {subtask["name"]}')
+        print('-' * 20)
 
 def process_subtask(subtask):
     """
@@ -48,7 +50,9 @@ def get_all_feedback(subtask):
     """
     feedback = []
     
-    excel_data_df = pd.read_excel(subtask['path'])
+    excel_data_df = get_excel_dataframe(subtask['path'])
+    if excel_data_df is None or excel_data_df.empty:
+        return feedback
     # print(excel_data_df.head())
 
     feedback_col_names = get_feedback_col_names(subtask)
@@ -56,12 +60,36 @@ def get_all_feedback(subtask):
     if len(feedback_col_names) == 0:
         print('No feedback columns found.')
         return feedback
+    
+    # check if feedback columns exist
+    if not all(col in excel_data_df.columns for col in feedback_col_names):
+        print('Feedback columns not found. Incorrect column names? Check config file. Exiting.')
+        return feedback
+
+    # for index, row in excel_data_df.iterrows():
+    #     feedback_row = {}
+    #     for col_name in feedback_col_names:
+    #         feedback_row[col_name] = row[col_name]
+    #     feedback.append(feedback_row)
+    
+    # print(f'Found {len(feedback)} feedback.')
+    # return feedback
+
+def get_excel_dataframe(file_path):
+    """
+    Returns a dataframe from an excel file, after converting the column names to lowercase.
+    """
+    df = pd.read_excel(file_path)
+    df.columns = df.columns.str.strip()
+    df.columns = df.columns.str.lower()
+
+    return df
 
 def get_feedback_col_names(subtask):
     """
     Returns a list of feedback column names.
     """
-    return subtask['feedback_column_names'] if 'feedback_column_names' in subtask else []
+    return [col.strip().lower() for col in subtask['feedback_column_names']] if 'feedback_column_names' in subtask else []
 
 def get_all_subtasks(config_dict):
     """
