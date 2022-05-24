@@ -105,10 +105,10 @@ To add a new parsing task for a new sheet type:
 * Give it a name using the `name` key
 * Add the required `subtask`s
 
-## Prerequisites
+## Prerequisites ✅
 - [ ] Python 3
 
-## How to Run
+## How to Run ⏯️
 1. `git clone` this repository.
 2. `cd` into the project root.
 3. Create and activate a Python [virtual env](https://docs.python.org/3/tutorial/venv.html) (OPTIONAL).
@@ -116,5 +116,5 @@ To add a new parsing task for a new sheet type:
 5. ❗❗ Check the `config.yml` file for correctness in case of of any editions to it. Check that it is present in the project root.
 6. Run `python3 src/parse.py`
 
-## Project Structure
+## Project Structure 🏗️
 _project dirs description_
