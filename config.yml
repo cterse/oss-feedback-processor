@@ -14,7 +14,7 @@ tasks:
         resource_column_indexes: []
         id_column_names: []
         id_column_indexes: ['B']
-        enabled: true
+        enabled: false
       
       - name: Parse OSS & wiki grades - Fall 21
         path: /Users/chinmay/dev/expertiza/oss-feedback-processor/data/spring-22/oss_and_wiki_grades_spring_2022.xlsx
@@ -47,7 +47,7 @@ tasks:
         path: /Users/chinmay/dev/expertiza/oss-feedback-processor/data/spring-22/project_demo_evaluation_rubric_spring_2022.xlsx
         url: https://docs.google.com/spreadsheets/d/1BgqowvanfrwYZBZN6kIAZHKlDoUGF_CQKhWyFohBYOE/edit#gid=0
         sheet: 0
-        feedback_column_names: []
+        feedback_column_names: ['Comments to be returned on project', 'Comments on design doc']
         feedback_column_indexes: ['Q', 'S']
         resource_column_names: []
         resource_column_indexes: []
