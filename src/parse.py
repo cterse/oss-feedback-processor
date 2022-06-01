@@ -22,10 +22,10 @@ def process_tasks(config_dict):
     """
     all_subtasks = get_all_subtasks(config_dict)
     # print(subtasks)
-    print(f'Found {len(all_subtasks)} subtasks.\n\n')
+    print(f'Found {len(all_subtasks)} subtasks.\n')
 
     subtasks = list(filter(is_enabled, all_subtasks))
-    print(f'Processing {len(subtasks)} subtasks.\n\n')
+    print(f'Processing {len(subtasks)} subtasks.\n')
 
     for subtask in subtasks:
         process_subtask(subtask)
@@ -51,7 +51,25 @@ def process_subtask(subtask):
         return
 
     # Get the feedback columns
-    feedback = get_all_feedback(subtask)
+    feedback_df = get_all_feedback(subtask)
+
+    # Write the feedback to a CSV file
+    if not feedback_df.empty: write_feedback_to_csv(feedback_df, subtask)
+
+def write_feedback_to_csv(feedback_df, subtask):
+    """
+    Writes the feedback dataframe to a CSV file.
+    """
+    try:
+        # Create the directory if it doesn't exist
+        if not os.path.exists(temp_output_dir):
+            os.makedirs(temp_output_dir)
+            print(f'Created directory: {temp_output_dir}')
+
+        csv_file_path = os.path.join(temp_output_dir, subtask['name'] + '.csv')
+        feedback_df.to_csv(csv_file_path, index=False)
+    except Exception as e:
+        print(f'Error writing CSV file: {e}')
 
 def get_all_feedback(subtask):
     """
@@ -89,9 +107,9 @@ def get_all_feedback(subtask):
 
     # Get the feedback
     feedback_df = get_feedback_df(excel_data_df, id_col_names, feedback_col_names)
-    print(f'Feedback dataframe:\n{feedback_df}')
+    # print(f'Feedback dataframe:\n{feedback_df}')
 
-    # return feedback
+    return feedback_df
 
 def get_feedback_df(excel_data_df, id_col_names, feedback_col_names):
     """
@@ -152,5 +170,7 @@ def get_all_subtasks(config_dict):
 
 config_dict = read_config_file(os.path.join(os.path.dirname(__file__), '..', 'config.yml'))
 # print(config_dict)
+
+temp_output_dir = os.path.join(os.path.dirname(__file__), '..', 'temp')
 
 process_tasks(config_dict)
