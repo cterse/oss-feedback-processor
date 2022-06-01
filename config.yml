@@ -9,23 +9,17 @@ tasks:
         url: https://docs.google.com/spreadsheets/d/1qY6wGMAqsA3gnAy2fll6nKq80ghtbUhgT24R2uNSGec/edit#gid=0
         sheet: 0
         feedback_column_names: ['OSS Comments', 'Wiki comments']
-        feedback_column_indexes: ['E', 'G']
         resource_column_names: []
-        resource_column_indexes: []
-        id_column_names: []
-        id_column_indexes: ['B']
+        id_column_names: ["PID", "Project Name"]
         enabled: false
       
       - name: Parse OSS & wiki grades - Fall 21
         path: /Users/chinmay/dev/expertiza/oss-feedback-processor/data/spring-22/oss_and_wiki_grades_spring_2022.xlsx
         url: https://docs.google.com/spreadsheets/d/1BgqowvanfrwYZBZN6kIAZHKlDoUGF_CQKhWyFohBYOE/edit#gid=0
         sheet: 0
-        feedback_column_names: []
-        feedback_column_indexes: ['E', 'G']
+        feedback_column_names: ['OSS Comments', 'Wiki comments']
         resource_column_names: []
-        resource_column_indexes: []
-        id_column_names: []
-        id_column_indexes: ['B']
+        id_column_names: ["PID", "Project Name"]
         enabled: true
   
   project_demo_eval_tasks:
@@ -36,11 +30,8 @@ tasks:
         url: https://docs.google.com/spreadsheets/d/1qY6wGMAqsA3gnAy2fll6nKq80ghtbUhgT24R2uNSGec/edit#gid=0
         sheet: 0
         feedback_column_names: ['Comments to be returned on project', 'Comments on design doc']
-        feedback_column_indexes: []
         resource_column_names: []
-        resource_column_indexes: []
-        id_column_names: []
-        id_column_indexes: ['E']
+        id_column_names: ['Project number and name']
         enabled: true
       
       - name: Parse Project demo evaluation rubric - Fall 21
@@ -48,11 +39,8 @@ tasks:
         url: https://docs.google.com/spreadsheets/d/1BgqowvanfrwYZBZN6kIAZHKlDoUGF_CQKhWyFohBYOE/edit#gid=0
         sheet: 0
         feedback_column_names: ['Comments to be returned on project', 'Comments on design doc']
-        feedback_column_indexes: ['Q', 'S']
         resource_column_names: []
-        resource_column_indexes: []
         id_column_names: ['Project number and name']
-        id_column_indexes: []
         enabled: true
   
   project_history_tasks:
@@ -63,10 +51,7 @@ tasks:
         url: https://docs.google.com/spreadsheets/d/1bUwyvxgWe6hRnUo1FkSz2PdQ6DQELS_VyQ1o8l4L0qM/edit#gid=1868522269
         sheet: 0
         feedback_column_names: ['Feedback on project', 'Feedback on design doc']
-        feedback_column_indexes: []
         resource_column_names: ['Submitted Work']
-        resource_column_indexes: []
         id_column_names: ['Project ID']
-        id_column_indexes: []
         enabled: true
   
