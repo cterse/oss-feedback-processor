@@ -20,14 +20,23 @@ def process_tasks(config_dict):
     """
     Processes the tasks in the config file and returns a list of task dictionaries.
     """
-    subtasks = get_all_subtasks(config_dict)
+    all_subtasks = get_all_subtasks(config_dict)
     # print(subtasks)
-    print(f'Found {len(subtasks)} subtasks.\n\n')
+    print(f'Found {len(all_subtasks)} subtasks.\n\n')
+
+    subtasks = list(filter(is_enabled, all_subtasks))
+    print(f'Processing {len(subtasks)} subtasks.\n\n')
 
     for subtask in subtasks:
         process_subtask(subtask)
         print(f'Processed subtask: {subtask["name"]}')
         print('-' * 20)
+
+def is_enabled(subtask):
+    """
+    Returns True if the subtask is enabled.
+    """
+    return subtask['enabled'] if subtask and 'enabled' in subtask else True
 
 def process_subtask(subtask):
     """
@@ -46,7 +55,7 @@ def process_subtask(subtask):
 
 def get_all_feedback(subtask):
     """
-    Returns a all feedback to be returned.
+    Returns all feedback to be returned.
     """
     feedback = []
     
@@ -55,6 +64,18 @@ def get_all_feedback(subtask):
         return feedback
     # print(excel_data_df.head())
 
+    # Get ID Column names
+    id_col_names = get_id_col_names(subtask)
+    if not id_col_names:
+        print('No ID columns found.')
+        return feedback
+
+    # Check if ID columns exist
+    if not all(col in excel_data_df.columns for col in id_col_names):
+        print('ID columns not found. Check config file. Exiting.')
+        return feedback
+
+    # Get Feedback Column names
     feedback_col_names = get_feedback_col_names(subtask)
     print(f'Feedback column names: {feedback_col_names}')
     if len(feedback_col_names) == 0:
@@ -66,14 +87,31 @@ def get_all_feedback(subtask):
         print('Feedback columns not found. Incorrect column names? Check config file. Exiting.')
         return feedback
 
-    # for index, row in excel_data_df.iterrows():
-    #     feedback_row = {}
-    #     for col_name in feedback_col_names:
-    #         feedback_row[col_name] = row[col_name]
-    #     feedback.append(feedback_row)
-    
-    # print(f'Found {len(feedback)} feedback.')
+    # Get the feedback
+    feedback_df = get_feedback_df(excel_data_df, id_col_names, feedback_col_names)
+    print(f'Feedback dataframe:\n{feedback_df}')
+
     # return feedback
+
+def get_feedback_df(excel_data_df, id_col_names, feedback_col_names):
+    """
+    Returns feedback dataframe from the main excel dataframe.
+    """
+    feedback_df = excel_data_df[id_col_names + feedback_col_names].copy()
+    
+    clean_feedback_df(feedback_df, id_col_names)
+
+    return feedback_df
+
+def clean_feedback_df(feedback_df, id_col_names):
+    """
+    Cleans the feedback dataframe.
+    """
+    # Remove rows with no ID
+    feedback_df.dropna(axis=0, how='any', subset=id_col_names, inplace=True)
+
+    # Replace no feedback with empty string
+    feedback_df.fillna('', inplace=True)
 
 def get_excel_dataframe(file_path):
     """
@@ -90,6 +128,12 @@ def get_feedback_col_names(subtask):
     Returns a list of feedback column names.
     """
     return [col.strip().lower() for col in subtask['feedback_column_names']] if 'feedback_column_names' in subtask else []
+
+def get_id_col_names(subtask):
+    """
+    Returns a list of ID column names.
+    """
+    return [col.strip().lower() for col in subtask['id_column_names']] if 'id_column_names' in subtask else []
 
 def get_all_subtasks(config_dict):
     """
