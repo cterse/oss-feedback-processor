@@ -108,10 +108,14 @@ def clean_feedback_df(feedback_df, id_col_names):
     Cleans the feedback dataframe.
     """
     # Remove rows with no ID
-    feedback_df.dropna(axis=0, how='any', subset=id_col_names, inplace=True)
+    feedback_df.dropna(axis=0, how='all', subset=id_col_names, inplace=True)
 
     # Replace no feedback with empty string
     feedback_df.fillna('', inplace=True)
+
+    # Strip whitespace from entire dataframe
+    for col in feedback_df.columns:
+        feedback_df[col] = feedback_df[col].str.strip()
 
 def get_excel_dataframe(file_path):
     """
