@@ -81,10 +81,12 @@ An example of a sheet parsing task in the `config.yaml` is shown below:
 ---
 tasks:
   ...
-  - oss_and_wiki_tasks:
+  oss_and_wiki_tasks:
     name: Parse OSS & wiki grades Sheet
+    description: Parse OSS & wiki grades Sheet
     subtasks:
       - name: Parse OSS & wiki grades - Spring 22
+        path: <absolute-project-path>/oss-feedback-processor/data/spring-22/oss_and_wiki_grades_spring_2022.xlsx
         url: https://docs.google.com/spreadsheets/d/1qY6wGMAqsA3gnAy2fll6nKq80ghtbUhgT24R2uNSGec/edit#gid=0
         sheet: 0
         feedback_column_names: ['OSS Comments', 'Wiki comments']
@@ -93,6 +95,7 @@ tasks:
         resource_column_indexes: []
         id_column_names: []
         id_column_indexes: ['B']
+        enabled: true
   ...
 ```
 Use of a `config.yaml` file makes the design scalable, as new tasks can be added with ease, without much code changes. 
@@ -104,3 +107,17 @@ To add a new parsing task for a new sheet type:
 * Create a new task under `tasks`
 * Give it a name using the `name` key
 * Add the required `subtask`s
+
+## Prerequisites ✅
+- [ ] Python 3
+
+## How to Run ⏯️
+1. `git clone` this repository.
+2. `cd` into the project root.
+3. Create and activate a Python [virtual env](https://docs.python.org/3/tutorial/venv.html) (OPTIONAL).
+4. Run `pip install -r requirements.txt` to install project dependencies
+5. ❗❗ Check the `config.yml` file for correctness in case of of any editions to it. Check that it is present in the project root.
+6. Run `python3 src/parse.py`
+
+## Project Structure 🏗️
+_project dirs description_
