@@ -138,4 +138,21 @@ To add a new parsing task for a new sheet type:
 6. Run `python3 src/parse.py`
 
 ## Project Structure 🏗️
-_project dirs description_
+```bash
+oss-feedback-processor
+├── README.md   # This file
+├── config.yml    # config file containing the feedback extraction tasks    
+├── data    # input xlsx sheets dir
+│   └── spring-22   # arranged in groups
+│       ├── comprehensive_expertiza_OSS_and_final_project_history.xlsx
+│       ├── oss_and_wiki_grades_spring_2022.xlsx
+│       └── project_demo_evaluation_rubric_spring_2022.xlsx
+├── requirements.txt    # Python requirements.txt
+├── res   # Resources for the README
+│   ├── oss_feedback_system_design.drawio
+│   └── oss_feedback_system_design.png
+└── src   # main source dir
+    └── parse.py    # Main script
+
+4 directories, 9 files
+```
