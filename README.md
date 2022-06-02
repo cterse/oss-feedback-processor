@@ -11,8 +11,8 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 #### OSS & wiki grades
 | Column # | Column Name | Relevant? | Remarks |
 |--------|--------|--------|--------|
-| 1 | PID | | |
-| 2 | Project Name | | |
+| 1 | PID | ✔️ | Id |
+| 2 | Project Name | ✔️ | Id |
 | 3 | Email Addresses | | |	
 | 4 | Mentor | | |
 | 5 | OSS comments | ✔️ | feedback |
@@ -38,7 +38,7 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 |	2	|	Email address	|		|		|
 |	3	|	Column C	|		|		|
 |	4	|	Your name	|		|		|
-|	5	|	Project number and name	|		|		|
+|	5	|	Project number and name	|	✔️ |	Id	|
 |	6	|	User-IDs of team members:	|		|		|
 |	7	|	List of features covered in the demo, and comments	|		|		|
 |	8	|	Should this project be merged?  Why or why not?	|		|		|
@@ -59,7 +59,7 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 | Column # | Column Name | Relevant? | Remarks |
 |--------|--------|--------|--------|
 |	1	|	Semester	|		|		|
-|	2	|	Project ID	|		|		|
+|	2	|	Project ID	|	✔️ |	Id	|
 |	3	|	Project name	|		|		|
 |	4	|	User-IDs of team members	|		|		|
 |	5	|	Submitted Work	|	yes	|	links	|
