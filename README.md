@@ -76,6 +76,27 @@ We will deal with three main input Google Sheets. Multiple instances of each fil
 ![system_design](/res/oss_feedback_system_design.png)
 
 ## Config File Structure 📜
+To minimize code changes when adding or removing jobs, a [config.yml](./config.yml) file has been created that lists all the feedback extraction jobs to be performed. Make sure this config.yml is present in the project root.
+Every feedback extraction and transfer task is specifed as a `subtask` in the `tasks` of the config file as follows:
+```yaml
+---
+tasks:
+  ...
+  [task-name]:
+    name: [name of the subtask]
+    description: [description of the subtask. OPTIONAL]
+    subtasks:
+      - name: [name of the subtask]
+        path: [local absolute path to xlsx file where feedback is present]
+        url: [Google Docs URL of the sheet where feedback is present]
+        sheet: [sheet number to be parsed]
+        feedback_column_names: [list of columns that contain the feedback to be extracted]
+        resource_column_names: [list of columns that contain any extra resources, like links, urls, etc., to be extracted]
+        id_column_names: [list of columns that act as the primary keys of the sheet]
+        enabled: [true|false process the job or not]
+  ...
+```
+
 An example of a sheet parsing task in the `config.yaml` is shown below:
 ```yaml
 ---
@@ -86,16 +107,13 @@ tasks:
     description: Parse OSS & wiki grades Sheet
     subtasks:
       - name: Parse OSS & wiki grades - Spring 22
-        path: <absolute-project-path>/oss-feedback-processor/data/spring-22/oss_and_wiki_grades_spring_2022.xlsx
+        path: /Users/chinmay/dev/expertiza/oss-feedback-processor/data/spring-22/oss_and_wiki_grades_spring_2022.xlsx
         url: https://docs.google.com/spreadsheets/d/1qY6wGMAqsA3gnAy2fll6nKq80ghtbUhgT24R2uNSGec/edit#gid=0
         sheet: 0
         feedback_column_names: ['OSS Comments', 'Wiki comments']
-        feedback_column_indexes: ['E', 'G']
         resource_column_names: []
-        resource_column_indexes: []
-        id_column_names: []
-        id_column_indexes: ['B']
-        enabled: true
+        id_column_names: ["PID", "Project Name"]
+        enabled: false
   ...
 ```
 Use of a `config.yaml` file makes the design scalable, as new tasks can be added with ease, without much code changes. 
