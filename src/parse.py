@@ -2,6 +2,7 @@ import pandas as pd
 import yaml
 import os
 import requests
+from utils import process_comprehensive_feedback_df
 
 def read_config_file(config_filepath):
     """
@@ -94,6 +95,12 @@ def get_all_feedback(subtask):
         print('ID columns not found. Check config file. Exiting.')
         return feedback
 
+    # Check if specified resource columns exist
+    res_col_names = get_res_col_names(subtask)
+    if not all(col in excel_data_df.columns for col in res_col_names):
+        print('Resource columns not found. Check config file. Exiting.')
+        return feedback
+
     # Get Feedback Column names
     feedback_col_names = get_feedback_col_names(subtask)
     print(f'Feedback column names: {feedback_col_names}')
@@ -107,17 +114,19 @@ def get_all_feedback(subtask):
         return feedback
 
     # Get the feedback
-    feedback_df = get_feedback_df(excel_data_df, id_col_names, feedback_col_names)
+    feedback_df = get_feedback_df(excel_data_df, id_col_names, feedback_col_names, res_col_names)
     # print(f'Feedback dataframe:\n{feedback_df}')
 
     return feedback_df
 
-def get_feedback_df(excel_data_df, id_col_names, feedback_col_names):
+def get_feedback_df(excel_data_df, id_col_names, feedback_col_names, res_col_names):
     """
     Returns feedback dataframe from the main excel dataframe.
     """
-    feedback_df = excel_data_df[id_col_names + feedback_col_names].copy()
+    feedback_df = excel_data_df[id_col_names + feedback_col_names + res_col_names].copy()
     
+    # process_comprehensive_feedback_df(feedback_df)
+
     clean_feedback_df(feedback_df, id_col_names)
 
     return feedback_df
@@ -157,6 +166,12 @@ def get_id_col_names(subtask):
     Returns a list of ID column names.
     """
     return [col.strip().lower() for col in subtask['id_column_names']] if 'id_column_names' in subtask else []
+
+def get_res_col_names(subtask):
+    """
+    Returns a list of resource column names.
+    """
+    return [col.strip().lower() for col in subtask['resource_column_names']] if 'resource_column_names' in subtask else []
 
 def get_all_subtasks(config_dict):
     """
