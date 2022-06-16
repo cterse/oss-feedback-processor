@@ -18,8 +18,14 @@ def get_pr_url_from_col_value(value):
         return None
 
     # split id_value over newlines
-    lines = value.split('\n')
-    return extract_pull_request_url(lines)
+    try:
+        lines = value.split('\n')
+        return extract_pull_request_url(lines)
+    except Exception as e:
+        print(f'Error processing value: {value}')
+        print(e)
+    
+    return None
 
 def extract_pull_request_url(lines):
     """

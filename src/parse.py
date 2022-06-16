@@ -114,21 +114,32 @@ def get_all_feedback(subtask):
         return feedback
 
     # Get the feedback
-    feedback_df = get_feedback_df(excel_data_df, id_col_names, feedback_col_names, res_col_names)
+    feedback_df = get_feedback_df(subtask, excel_data_df, id_col_names, feedback_col_names, res_col_names)
     # print(f'Feedback dataframe:\n{feedback_df}')
 
     return feedback_df
 
-def get_feedback_df(excel_data_df, id_col_names, feedback_col_names, res_col_names):
+def get_feedback_df(subtask, excel_data_df, id_col_names, feedback_col_names, res_col_names):
     """
     Returns feedback dataframe from the main excel dataframe.
     """
     feedback_df = excel_data_df[id_col_names + feedback_col_names + res_col_names].copy()
     
-    # process_comprehensive_feedback_df(feedback_df)
+    feedback_df = process_feedback_df(feedback_df, subtask)
+
+    print(feedback_df)
 
     clean_feedback_df(feedback_df, id_col_names)
 
+    return feedback_df
+
+def process_feedback_df(feedback_df, subtask):
+    """
+    Processes the feedback dataframe with custom business logic.
+    """
+    if subtask and 'comprehensive expertiza oss and final project history' in subtask['name'].lower():
+        return process_comprehensive_feedback_df(feedback_df)
+    
     return feedback_df
 
 def clean_feedback_df(feedback_df, id_col_names):
