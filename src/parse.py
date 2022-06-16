@@ -1,6 +1,7 @@
 import pandas as pd
 import yaml
 import os
+import requests
 
 def read_config_file(config_filepath):
     """
@@ -167,6 +168,38 @@ def get_all_subtasks(config_dict):
             subtasks.extend(task['subtasks'])
 
     return subtasks
+
+def write_comment_to_pr(comment, pr_number):
+    """
+    Writes a comment to the PR.
+    """
+    print(f'Writing comment: {comment}')
+    
+    repo_owner = 'expertiza'
+    repo_name = 'expertiza'
+    github_token = os.environ['OSS_GITHUBTOKEN']
+
+    url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/issues/{pr_number}/comments'
+
+    headers = {
+        'Authorization': f'token {github_token}',
+        'Content-Type': 'application/json'
+    }
+
+    data = {
+        'body': comment
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        print(f'Comment ID: {response.json()["id"]}')
+        print(f'HTML URL: {response.json()["html_url"]}')
+
+        return response.json()['id']
+    except Exception as e:
+        print(f'Error writing comment: {e}')
+
+    return -1
 
 config_dict = read_config_file(os.path.join(os.path.dirname(__file__), '..', 'config.yml'))
 # print(config_dict)
